@@ -73,7 +73,22 @@
       foot.append(el('p', 'book-when', '準備ができ次第、ここと公式LINEでお届けします'));
     }
     body.append(foot);
-    li.append(spine, body);
+    li.append(spine);
+    if (item.image) {
+      li.classList.add('has-cover');
+      const cover = el(state === 'open' ? 'a' : 'div', 'book-cover');
+      if (state === 'open') {
+        cover.href = item.url; cover.target = '_blank'; cover.rel = 'noopener noreferrer';
+        cover.setAttribute('aria-label', item.title + 'を' + (item.cta || 'ひらく'));
+      }
+      const img = el('img');
+      img.src = item.image; img.alt = ''; img.width = 800; img.height = 800;
+      img.loading = index === 0 ? 'eager' : 'lazy'; img.decoding = 'async';
+      cover.append(img);
+      if (state !== 'open') cover.append(el('span', 'cover-status', badge));
+      li.append(cover);
+    }
+    li.append(body);
     return li;
   }
 

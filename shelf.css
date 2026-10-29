@@ -131,6 +131,20 @@ a { color: inherit; }
 }
 .book-open:active { transform: translateY(1px); }
 
+/* 表紙は正方形のまま全体を表示。未公開の表紙には閲覧状態を重ねる。 */
+.books { gap: 20px; }
+.has-cover .book-spine { grid-column: 1; grid-row: 1 / 3; }
+.has-cover .book-body { grid-column: 2; }
+.book-cover { display: block; position: relative; grid-column: 2; min-width: 0; }
+.book-cover img { display: block; width: 100%; height: auto; aspect-ratio: 1; }
+.book-cover:focus-visible { outline: 3px solid var(--wine); outline-offset: -3px; }
+.cover-status {
+  position: absolute; top: 12px; right: 12px; padding: 6px 10px;
+  color: var(--wine-deep); background: var(--paper); border: 1px solid var(--gold-hi);
+  font-size: 12px; font-weight: 700; box-shadow: 0 2px 8px rgba(43,26,29,.12);
+}
+.is-locked .book-cover img, .is-soon .book-cover img, .is-pending .book-cover img { opacity: .78; }
+
 /* まだ見られない：灰色の紙・点線の縁。ボタンは置かない */
 .book.is-soon, .book.is-locked, .book.is-pending {
   background: var(--gray-tint);
