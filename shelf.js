@@ -3,7 +3,7 @@
   const S = window.SHELF || { line: [], guest: [], lineKeys: [], guestKeys: [], next: {} };
   // 棚ごとの合言葉。ひらいた状態は端末に残す。
   const SHELVES = {
-    line: { store: 'baiko-shelf-line', keys: S.lineKeys || [], wrong: '合言葉がちがうようです。公式LINEの5つ目のメッセージを、もう一度ご確認ください。' },
+    line: { store: 'baiko-shelf-line', keys: S.lineKeys || [], wrong: '合言葉がちがうようです。公式LINEの3通目以降のメッセージを、もう一度ご確認ください。' },
     guest: { store: 'baiko-shelf-guest', keys: S.guestKeys || [], wrong: '合言葉がちがうようです。説明会の最後の画面を、もう一度ご確認ください。' }
   };
   const INTRO_KEY = 'baiko-shelf-intro';
@@ -11,8 +11,9 @@
 
   // 日本時間の「今」。確認用に ?now=2026-11-08T21:00 で日時を差し替えられる。
   function jst(iso) { return new Date(iso + ':00+09:00'); }
-  const nowParam = new URLSearchParams(location.search).get('now');
-  const now = nowParam ? jst(nowParam) : new Date();
+  const isPreview = location.protocol === 'file:' || ['localhost', '127.0.0.1'].includes(location.hostname);
+  const nowParam = isPreview ? new URLSearchParams(location.search).get('now') : null;
+  let now = nowParam ? jst(nowParam) : new Date();
 
   function store(key, value) {
     try {
@@ -35,7 +36,7 @@
   }
 
   // state: 'open' 公開中 / 'locked' 合言葉待ち / 'pending' 準備中
-  const BADGE = { open: '公開中', pending: '準備中' };
+  const BADGE = { open: '公開中', pending: '準備中', soon: '公開前' };
   const LOCK = {
     line: { badge: '合言葉でひらく', when: '' },
     guest: { badge: '参加者限定', when: '説明会で合言葉をお伝えします' }
@@ -65,6 +66,9 @@
       const back = el('a', 'book-back', '合言葉を入れる ↑');
       back.href = '#key-form-' + shelf;
       foot.append(back);
+    } else if (state === 'soon') {
+      const date = new Intl.DateTimeFormat('ja-JP', { timeZone: 'Asia/Tokyo', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(jst(item.releaseAt));
+      foot.append(el('p', 'book-when', date + ' 公開予定'));
     } else {
       foot.append(el('p', 'book-when', '準備ができ次第、ここと公式LINEでお届けします'));
     }
@@ -78,6 +82,7 @@
   function stateOf(item, shelf) {
     if (item.always) return 'open';
     if (!opened[shelf]) return 'locked';
+    if (item.releaseAt && now < jst(item.releaseAt)) return 'soon';
     return item.url ? 'open' : 'pending';
   }
 
@@ -105,8 +110,8 @@
       ? '今ひらける ' + counts.guest + ' / ' + S.guest.length
       : '全' + S.guest.length + '特典';
     document.getElementById('line-note').textContent = opened.line
-      ? '合言葉でひらきました。いつでも見返せます。'
-      : '友だち追加から届く5つ目のLINEで、合言葉をお伝えします。';
+      ? '合言葉でひらきました。各特典は、表示された公開日時から見られます。'
+      : '公式LINEの3通目以降で、合言葉をお伝えします。';
     document.getElementById('guest-note').textContent = opened.guest
       ? '合言葉でひらきました。ご参加ありがとうございました。'
       : '11/11（水）の説明会の最後に、合言葉をご案内します。';
@@ -182,4 +187,13 @@
   bindKey('line');
   bindKey('guest');
   intro();
+  // 開いたままでも公開日時を過ぎた特典を表示する。
+  function refreshTime() {
+    if (nowParam) return;
+    now = new Date();
+    render();
+    renderNext();
+  }
+  setInterval(refreshTime, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshTime(); });
 })();

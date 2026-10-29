@@ -1,13 +1,13 @@
 // LINE特典の本棚の差し替え設定。リンクや合言葉が変わったら、ここだけ書き換える。
-// 第一の棚は合言葉「ばいこう」でひらく（友だち追加のステップ配信の5通目で伝える）。
+// 第一の棚は合言葉「ばいこう」でひらく（公式LINEの3通目以降で伝える。合言葉＋公開日時の両方で解放）。
 // always:true は合言葉に関係なく、最初からひらいている（1対1のLINE相談は常時受け付けのため）。
 // url を空にすると「準備中」と表示される（参加者限定の特典は、完成したら url を入れる）。
 window.SHELF = {
   line: [
-    { title: 'スマホで梅光の1日体験', note: '登校から放課後まで、生徒の目線で。', url: 'https://baikogakuin.github.io/baiko-immersive-lp/', kind: '体験' },
-    { title: '50分で全部わかる学校説明動画', note: '下関まで来なくても大丈夫。家族で、好きな時間に。', url: 'https://baikogakuin.github.io/baiko-video/', kind: '動画' },
-    { title: '在校生のホンネ集', note: '先生の前では言えない「ぶっちゃけ」を1冊に。', url: 'https://baikogakuin.github.io/baiko-honne/', kind: '読み物' },
-    { title: '梅光で生徒が“化ける”理由', note: '入学してから何が変わるのか、13枚のスライドで。', url: 'https://baikogakuin.github.io/baiko-bakeru/', kind: 'スライド' },
+    { title: 'スマホで梅光の1日体験', note: '登校から放課後まで、生徒の目線で。', url: 'https://baikogakuin.github.io/baiko-immersive-lp/', releaseAt: '2026-10-29T20:00', kind: '体験' },
+    { title: '50分で全部わかる学校説明動画', note: '下関まで来なくても大丈夫。家族で、好きな時間に。', url: 'https://baikogakuin.github.io/baiko-video/', releaseAt: '2026-10-31T20:00', kind: '動画' },
+    { title: '在校生のホンネ集', note: '先生の前では言えない「ぶっちゃけ」を1冊に。', url: 'https://baikogakuin.github.io/baiko-honne/', releaseAt: '2026-11-02T20:00', kind: '読み物' },
+    { title: '梅光で生徒が“化ける”理由', note: '入学してから何が変わるのか、13枚のスライドで。', url: 'https://baikogakuin.github.io/baiko-bakeru/', releaseAt: '2026-11-05T20:00', kind: 'スライド' },
     { title: '1対1のLINE相談', note: '人には聞きにくいことも、トークでこっそり。返信は平日8:30〜17:20、3営業日以内。', always: true, url: 'https://lin.ee/xZlPS00', kind: '相談', cta: 'トークで相談する' }
   ],
   guest: [
