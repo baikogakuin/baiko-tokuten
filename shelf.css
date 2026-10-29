@@ -175,7 +175,7 @@ a { color: inherit; }
 @keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 
 /* 合言葉でひらいた瞬間、本が金に光って並ぶ */
-.shelf-guest.just-opened .book { animation: unseal .9s ease both; animation-delay: calc((var(--i) - 5) * .12s); }
+.just-opened .book { animation: unseal .9s ease both; animation-delay: calc(var(--i) * .08s); }
 @keyframes unseal {
   from { opacity: 0; transform: translateY(8px); box-shadow: 0 0 0 2px var(--gold-hi), 0 0 24px rgba(217,189,126,.7); }
   to { opacity: 1; transform: none; }

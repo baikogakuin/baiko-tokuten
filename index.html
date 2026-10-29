@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shelf.css?v=1029e">
-<script src="config.js?v=1029e" defer></script>
-<script src="shelf.js?v=1029e" defer></script>
+<link rel="stylesheet" href="shelf.css?v=1029f">
+<script src="config.js?v=1029f" defer></script>
+<script src="shelf.js?v=1029f" defer></script>
 </head>
 <body>
 <div id="intro" aria-hidden="true">
@@ -28,7 +28,7 @@
     <h1>LINE特典の本棚</h1>
     <p class="lead">お届けした特典を、ここにまとめました。<br>トークをさかのぼらずに、いつでも見返せます。</p>
     <nav class="jump" aria-label="棚へ移動">
-      <a href="#shelf-line"><span>LINEで届く特典 ↓</span><b id="line-count">今ひらける 0 / 5</b></a>
+      <a href="#shelf-line"><span>LINEで届く特典 ↓</span><b id="line-count">合言葉でひらく</b></a>
       <a href="#shelf-guest"><span>説明会の参加者限定 ↓</span><b id="guest-count">全4特典</b></a>
     </nav>
   </header>
@@ -37,8 +37,16 @@
     <div class="shelf-head">
       <p class="shelf-kicker">第一の棚</p>
       <h2 id="shelf-line-title">公式LINEで、順番に届く特典</h2>
-      <p class="shelf-note">LINEで届いた日から、ここでもひらけます。</p>
+      <p class="shelf-note" id="line-note"></p>
     </div>
+    <form class="key" id="key-form-line" autocomplete="off">
+      <label for="key-input-line">合言葉を入れる</label>
+      <div class="key-row">
+        <input id="key-input-line" name="key" type="text" inputmode="text" enterkeyhint="go" placeholder="ひらがな・カタカナ・漢字どれでも" maxlength="20">
+        <button type="submit">ひらく</button>
+      </div>
+      <p class="key-msg" id="key-msg-line" role="status"></p>
+    </form>
     <ol class="books" id="books-line"></ol>
   </section>
 
@@ -48,13 +56,13 @@
       <h2 id="shelf-guest-title">説明会に参加した方だけの特典</h2>
       <p class="shelf-note" id="guest-note"></p>
     </div>
-    <form class="key" id="key-form" autocomplete="off">
-      <label for="key-input">合言葉を入れる</label>
+    <form class="key" id="key-form-guest" autocomplete="off">
+      <label for="key-input-guest">合言葉を入れる</label>
       <div class="key-row">
-        <input id="key-input" name="key" type="text" inputmode="text" enterkeyhint="go" placeholder="ひらがな・カタカナ・漢字どれでも" maxlength="20">
+        <input id="key-input-guest" name="key" type="text" inputmode="text" enterkeyhint="go" placeholder="ひらがな・カタカナ・漢字どれでも" maxlength="20">
         <button type="submit">ひらく</button>
       </div>
-      <p class="key-msg" id="key-msg" role="status"></p>
+      <p class="key-msg" id="key-msg-guest" role="status"></p>
     </form>
     <ol class="books" id="books-guest"></ol>
   </section>
