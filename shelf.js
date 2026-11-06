@@ -60,6 +60,7 @@
       const a = el('a', 'book-open', (item.cta || 'ひらく') + ' →');
       a.href = item.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
       a.setAttribute('aria-label', item.title + 'を' + (item.cta || 'ひらく'));
+      if (item.youtube) { a.dataset.yt = item.youtube; a.dataset.title = item.title; a.textContent = '動画を見る →'; }
       foot.append(a);
     } else if (state === 'locked') {
       if (LOCK[shelf].when) foot.append(el('p', 'book-when', LOCK[shelf].when));
@@ -80,6 +81,7 @@
       if (state === 'open') {
         cover.href = item.url; cover.target = '_blank'; cover.rel = 'noopener noreferrer';
         cover.setAttribute('aria-label', item.title + 'を' + (item.cta || 'ひらく'));
+        if (item.youtube) { cover.dataset.yt = item.youtube; cover.dataset.title = item.title; }
       }
       const img = el('img');
       img.src = item.image; img.alt = ''; img.width = 800; img.height = 800;
@@ -197,8 +199,41 @@
     setTimeout(done, 1000);
   }
 
+  // YouTubeの限定公開動画を、このページの中で再生する。
+  function player() {
+    const dlg = el('div', 'player'); dlg.hidden = true;
+    dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-label', '動画');
+    const box = el('div', 'player-box');
+    const bar = el('div', 'player-bar');
+    const ttl = el('p', 'player-title');
+    const close = el('button', 'player-close', '閉じる ×'); close.type = 'button';
+    bar.append(ttl, close);
+    const frame = el('div', 'player-frame');
+    box.append(bar, frame); dlg.append(box); document.body.append(dlg);
+    let last = null;
+    function hide() { dlg.hidden = true; frame.textContent = ''; document.body.classList.remove('player-on'); if (last) last.focus(); }
+    function show(id, title, from) {
+      last = from; ttl.textContent = title || '';
+      const f = el('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?rel=0&playsinline=1&autoplay=1';
+      f.title = title || '動画'; f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+      frame.textContent = ''; frame.append(f);
+      dlg.hidden = false; document.body.classList.add('player-on'); close.focus();
+    }
+    close.addEventListener('click', hide);
+    dlg.addEventListener('click', (ev) => { if (ev.target === dlg) hide(); });
+    document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && !dlg.hidden) hide(); });
+    document.addEventListener('click', (ev) => {
+      const t = ev.target.closest && ev.target.closest('[data-yt]');
+      if (!t) return;
+      ev.preventDefault();
+      show(t.dataset.yt, t.dataset.title, t);
+    });
+  }
+
   render();
   renderNext();
+  player();
   bindKey('line');
   bindKey('guest');
   intro();

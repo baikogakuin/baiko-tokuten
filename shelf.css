@@ -230,3 +230,14 @@ a { color: inherit; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .page > * { opacity: 1; transform: none; }
 }
+
+/* ---------- 動画プレーヤー ---------- */
+.player { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 12px; background: rgba(43, 26, 29, .86); }
+.player[hidden] { display: none; }
+.player-box { width: 100%; max-width: 720px; }
+.player-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.player-title { margin: 0; font-family: var(--serif); font-size: 14px; font-weight: 700; line-height: 1.5; color: #fff; }
+.player-close { flex: none; min-height: 40px; padding: 0 14px; border: 1px solid var(--gold-hi); border-radius: 999px; background: var(--white); color: var(--wine); font-size: 13px; font-weight: 700; cursor: pointer; }
+.player-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 6px; overflow: hidden; }
+.player-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+body.player-on { overflow: hidden; }
