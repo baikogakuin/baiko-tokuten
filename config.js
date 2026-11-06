@@ -11,9 +11,9 @@ window.SHELF = {
     { title: '1対1のLINE相談', image: 'assets/benefit-05.webp', note: '人には聞きにくいことも、トークでこっそり。返信は平日8:30〜17:20、3営業日以内。', always: true, url: 'https://lin.ee/xZlPS00', kind: '相談', cta: 'トークで相談する' }
   ],
   guest: [
-    { title: '生徒が英語で案内する行事ツアー', image: 'assets/benefit-06.webp', note: '字幕つき。英語が苦手でも楽しめる。', url: '', kind: '動画' },
-    { title: '在校生ぶっちゃけQ&A動画', image: 'assets/benefit-07.webp', note: '在校生が、聞かれたことに本音で答える。', url: '', kind: '動画' },
-    { title: '50万円を任された高校生の話', image: 'assets/benefit-08.webp', note: '生徒だけで集客を動かした本人たちのインタビュー。', url: '', kind: '読み物' },
+    { title: '生徒が英語で案内する行事ツアー', image: 'assets/benefit-06.webp', note: '字幕つき。英語が苦手でも楽しめる。', url: 'https://youtu.be/4HatC9rJ9eg', kind: '動画' },
+    { title: '在校生ぶっちゃけQ&A動画', image: 'assets/benefit-07.webp', note: '在校生が、聞かれたことに本音で答える。', url: 'https://youtu.be/UcFxjOW-fB4', kind: '動画' },
+    { title: '50万円を任された高校生の話', image: 'assets/benefit-08.webp', note: '生徒だけで集客を動かした本人たちのインタビュー。', url: 'https://youtu.be/62AtLnFNb_A', kind: '動画' },
     { title: '説明会まるごと見逃し録画', image: 'assets/benefit-09.webp', note: '聞き逃した所を、あとから家族で。', url: '', kind: '動画' }
   ],
   // 合言葉の照合用（'baiko-shelf:' + 合言葉 のSHA-256）。
